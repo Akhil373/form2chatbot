@@ -5,8 +5,10 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "browser-use>=0.9.5",
     "google-genai>=1.47.0",
     "markdownify>=1.2.0",
+    "openai>=1.109.1",
     "playwright>=1.55.0",
     "python-dotenv>=1.2.1",
     "requests>=2.32.5",

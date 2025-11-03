@@ -1,3 +1,5 @@
+import json
+
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
@@ -24,33 +26,33 @@ submit_form_answer = {
 }
 
 
-raw_data = ""
+json_data = ""
 try:
     with open("test.json", "r", encoding="utf-8") as f:
-        raw_data += f.read()
+        json_data = json.load(f)
 except Exception as e:
     print(e)
 
-system = f"""
-You are a friendly and helpful assistant. Your primary goal is to have a 
+SYSTEM = f"""
+You are a friendly and helpful assistant. Your primary goal is to have a
 natural, casual conversation with a user to fill out a form.
 
 Here's the form questions and details:
-{raw_data}
+{json_data}
 
 **Your Instructions:**
 1.  Ask one question at a time and be conversational.
 2.  When you get a valid answer, you MUST call the `submit_form_answer` function.
-3.  **IMPORTANT:** If the user asks a clarifying question (like 'what does that mean?') 
-    or goes on a small tangent, you should engage with them naturally. 
+3.  **IMPORTANT:** If the user asks a clarifying question (like 'what does that mean?')
+    or goes on a small tangent, you should engage with them naturally.
     Answer their question first. Do not be overly rigid.
-4.  After you've answered their question, gently guide them back to 
+4.  After you've answered their question, gently guide them back to
     the form question you were trying to ask.
 """
 
 client = genai.Client()
 tools = types.Tool(function_declarations=[submit_form_answer])
-config = types.GenerateContentConfig(system_instruction=system, tools=[tools])
+config = types.GenerateContentConfig(system_instruction=SYSTEM, tools=[tools])
 
 
 chat = client.chats.create(model="gemini-2.5-flash", config=config)
@@ -63,7 +65,11 @@ while True:
     if user_prompt.strip().lower() == "/bye":
         break
 
-    response = chat.send_message(user_prompt)
+    response = chat.send_message(
+        f"""Don't forget the call submit_form_answer function to submit my previous answers(if any).
+        Anyway, let's continue:
+                                 {user_prompt}"""
+    )
 
     if response.candidates[0].content.parts[0].function_call:
         function_call = response.candidates[0].content.parts[0].function_call
@@ -90,6 +96,11 @@ while True:
         print("AI: " + response.text)
 
 print("\n--- Form Complete ---")
-import json
 
-print(json.dumps(form_data, indent=2))
+for q in json_data:
+    question_text = q["question"]
+    if question_text in form_data:
+        q["answer"] = form_data[question_text]
+
+with open("test.json", "w", encoding="utf-8") as f:
+    json.dump(json_data, f, ensure_ascii=False, indent=2)

@@ -10,7 +10,9 @@
       "Post doctoral level scholar",
       "Other"
     ],
-    "required": true
+    "required": true,
+    "id": 0,
+    "answer": "Undergraduate student"
   },
   {
     "question": "My broad discipline of study",
@@ -28,7 +30,9 @@
       "Management",
       "Other"
     ],
-    "required": true
+    "required": true,
+    "id": 1,
+    "answer": "Engineering"
   },
   {
     "question": "Where are you currently studying?",
@@ -41,7 +45,9 @@
       "In a National Institute",
       "Other"
     ],
-    "required": true
+    "required": true,
+    "id": 2,
+    "answer": "In a private college"
   },
   {
     "question": "Please choose the university/ institute which will be granting the degree for your current course:",
@@ -54,12 +60,16 @@
       "Unsure",
       "Other"
     ],
-    "required": true
+    "required": true,
+    "id": 3,
+    "answer": "Private University"
   },
   {
     "question": "The State/Union Territory where I am studying now is:",
     "type": "text",
-    "required": true
+    "required": true,
+    "id": 4,
+    "answer": "Maharashtra"
   },
   {
     "question": "I am in this State/Union Territory because:",
@@ -69,7 +79,9 @@
       "I belong to this State/Union Territory",
       "My family has migrated here"
     ],
-    "required": true
+    "required": true,
+    "id": 5,
+    "answer": "I have moved here for education, away from my family"
   },
   {
     "question": "My gender",
@@ -81,7 +93,9 @@
       "Non-binary",
       "Prefer not to say"
     ],
-    "required": true
+    "required": true,
+    "id": 6,
+    "answer": "Female"
   },
   {
     "question": "Do you belong to:",
@@ -92,7 +106,9 @@
       "Other Backward Class",
       "None of the Above"
     ],
-    "required": true
+    "required": true,
+    "id": 7,
+    "answer": "None of the Above"
   },
   {
     "question": "My religion",
@@ -108,7 +124,9 @@
       "Other",
       "Prefer not to say"
     ],
-    "required": true
+    "required": true,
+    "id": 8,
+    "answer": "Hindu"
   },
   {
     "question": "Economic group",
@@ -118,7 +136,9 @@
       "Non-EWS",
       "Prefer not to say"
     ],
-    "required": true
+    "required": true,
+    "id": 9,
+    "answer": "Non-EWS"
   },
   {
     "question": "Monthly household income (in Rupees)",
@@ -131,50 +151,41 @@
       "Above 5,00,000",
       "Prefer not to say"
     ],
-    "required": true
+    "required": true,
+    "id": 10,
+    "answer": "Rs. 1,00,001 - 2,00,000"
   },
   {
     "question": "Disability status",
     "type": "radio",
-    "options": [
-      "Yes",
-      "No"
-    ],
-    "required": true
+    "options": ["Yes", "No"],
+    "required": true,
+    "id": 11,
+    "answer": "No"
   },
   {
     "question": "Location of my permanent residence",
     "type": "radio",
-    "options": [
-      "Urban",
-      "Semi-urban",
-      "Metropolitan",
-      "Rural",
-      "Tribal"
-    ],
-    "required": true
+    "options": ["Urban", "Semi-urban", "Metropolitan", "Rural", "Tribal"],
+    "required": true,
+    "id": 12,
+    "answer": "Urban"
   },
   {
     "question": "Location where I completed 12th grade/ Pre-university education",
     "type": "radio",
-    "options": [
-      "Urban",
-      "Semi-urban",
-      "Metropolitan",
-      "Rural",
-      "Tribal"
-    ],
-    "required": true
+    "options": ["Urban", "Semi-urban", "Metropolitan", "Rural", "Tribal"],
+    "required": true,
+    "id": 13,
+    "answer": "Urban"
   },
   {
     "question": "Medium of instruction in 12th grade/ Pre-university education",
     "type": "radio",
-    "options": [
-      "English",
-      "Hindi",
-      "Regional Language"
-    ],
-    "required": true
+    "options": ["English", "Hindi", "Regional Language"],
+    "required": true,
+    "id": 14,
+    "answer": "English"
   },
   {
     "question": "My work profile",
@@ -183,16 +194,17 @@
       "Working on part time basis to earn",
       "Only engaged in Studies- Not working for income"
     ],
-    "required": true
+    "required": true,
+    "id": 15,
+    "answer": "Only engaged in Studies- Not working for income"
   },
   {
     "question": "I am the first in my immediate family (parents, and siblings) to pursue higher education",
     "type": "radio",
-    "options": [
-      "Yes",
-      "No"
-    ],
-    "required": true
+    "options": ["Yes", "No"],
+    "required": true,
+    "id": 16,
+    "answer": "No"
   },
   {
     "question": "My current living arrangement:",
@@ -205,16 +217,17 @@
       "Residing in a rented room",
       "Other"
     ],
-    "required": true
+    "required": true,
+    "id": 17,
+    "answer": "Residing in hostel of my institution"
   },
   {
     "question": "Sending money to contribute to the family on a regular basis:",
     "type": "radio",
-    "options": [
-      "Yes",
-      "No"
-    ],
-    "required": true
+    "options": ["Yes", "No"],
+    "required": true,
+    "id": 18,
+    "answer": "No"
   },
   {
     "question": "The usual amount available to me per month for food and other personal expenses, after paying course fee and accommodation charges, and after contributing money to family (if any):",
@@ -226,15 +239,16 @@
       "Rs. 15,001 – 20,000",
       "More than Rs. 20,000"
     ],
-    "required": true
+    "required": true,
+    "id": 19,
+    "answer": "Rs. 10,001 – 15,000"
   },
   {
     "question": "Did you take any tuitions during pre-university/ 11-12th grades, or after that, before starting undergraduate education?",
     "type": "radio",
-    "options": [
-      "Yes",
-      "No"
-    ],
-    "required": true
+    "options": ["Yes", "No"],
+    "required": true,
+    "id": 20,
+    "answer": "Yes"
   }
 ]
