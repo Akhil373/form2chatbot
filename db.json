@@ -7,8 +7,7 @@
       "No"
     ],
     "required": false,
-    "id": 0,
-    "answer": "Yes"
+    "id": 0
   },
   {
     "question": "How comfortable are you with the idea of technology being used to manage aspects of everyday life (e.g., traffic control, healthcare monitoring)?",
@@ -19,8 +18,7 @@
       "Doesn't sound interesting"
     ],
     "required": false,
-    "id": 1,
-    "answer": "Great idea"
+    "id": 1
   },
   {
     "question": "Do you think Society 5.0 could potentially address challenges faced by modern societies, such as an aging population or environmental issues?",
@@ -31,8 +29,7 @@
       "Unsure"
     ],
     "required": false,
-    "id": 2,
-    "answer": "Unsure"
+    "id": 2
   },
   {
     "question": "How do you envision Society 5.0 tackling these challenges?",

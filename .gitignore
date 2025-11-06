@@ -14,6 +14,5 @@ tmp
 test*
 usr_data
 agent_history.gif
-*.tcss
-tui.py
 userData*
+app.css

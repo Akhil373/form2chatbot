@@ -28,7 +28,7 @@ submit_form_answer = {
 
 json_data = ""
 try:
-    with open("test.json", "r", encoding="utf-8") as f:
+    with open("db.json", "r", encoding="utf-8") as f:
         json_data = json.load(f)
 except Exception as e:
     print(e)
@@ -55,52 +55,64 @@ tools = types.Tool(function_declarations=[submit_form_answer])
 config = types.GenerateContentConfig(system_instruction=SYSTEM, tools=[tools])
 
 
-chat = client.chats.create(model="gemini-2.5-flash", config=config)
+chat = client.chats.create(model="gemini-2.5-flash-lite", config=config)
 
 form_data = {}
 
-print("type '/bye' to exit chat.")
-while True:
-    user_prompt = input("You: ")
-    if user_prompt.strip().lower() == "/bye":
-        break
+if __name__ == "__main__":
+    print("type '/bye' to exit chat.")
+    while True:
+        try:
+            user_prompt = input("You: ")
+            if user_prompt.strip().lower() == "/bye":
+                break
 
-    response = chat.send_message(
-        f"""Don't forget the call submit_form_answer function to submit my previous answers(if any).
-        Anyway, let's continue:
-                                 {user_prompt}"""
-    )
+            response = chat.send_message(
+                f"""Don't forget to call submit_form_answer function to submit my previous answers (if any).
+Anyway, let's continue:
+{user_prompt}"""
+            )
 
-    if response.candidates[0].content.parts[0].function_call:
-        function_call = response.candidates[0].content.parts[0].function_call
+            if response.candidates[0].content.parts[0].function_call:
+                function_call = response.candidates[0].content.parts[0].function_call
 
-        print(f"Function call: {function_call.name}")
-        print(f"Arguments: {function_call.args}")
+                print(f"Function call: {function_call.name}")
+                print(f"Arguments: {function_call.args}")
 
-        question_text = function_call.args["question"]
-        answer_text = function_call.args["answer"]
-        form_data[question_text] = answer_text
+                question_text = function_call.args["question"]
+                answer_text = function_call.args["answer"]
+                form_data[question_text] = answer_text
 
-        function_response_part = types.Part.from_function_response(
-            name=function_call.name,
-            response={
-                "status": "success",
-                "message": f"Answer for '{question_text}' recorded.",
-            },
-        )
-        response = chat.send_message(function_response_part)
+                function_response_part = types.Part.from_function_response(
+                    name=function_call.name,
+                    response={
+                        "status": "success",
+                        "message": f"Answer for '{question_text}' recorded.",
+                    },
+                )
+                response = chat.send_message(function_response_part)
 
-        print("AI: " + response.text)
+                print("AI: " + response.text)
 
-    else:
-        print("AI: " + response.text)
+            else:
+                print("AI: " + response.text)
 
-print("\n--- Form Complete ---")
+        except KeyboardInterrupt:
+            print("\nInterrupted by user.")
+            break
+        except Exception as e:
+            print(f"[ERROR] Something went wrong: {e}")
 
-for q in json_data:
-    question_text = q["question"]
-    if question_text in form_data:
-        q["answer"] = form_data[question_text]
+    print("\n--- Form Complete ---")
 
-with open("test.json", "w", encoding="utf-8") as f:
-    json.dump(json_data, f, ensure_ascii=False, indent=2)
+    try:
+        for q in json_data:
+            question_text = q["question"]
+            if question_text in form_data:
+                q["answer"] = form_data[question_text]
+
+        with open("db.json", "w", encoding="utf-8") as f:
+            json.dump(json_data, f, ensure_ascii=False, indent=2)
+        print("Form data saved to db.json")
+    except Exception as e:
+        print(f"[ERROR] Failed to save form data: {e}")

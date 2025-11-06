@@ -1,4 +1,5 @@
 import json
+import os
 import re
 import time
 
@@ -12,14 +13,13 @@ load_dotenv()
 chrome_path = "/usr/bin/google-chrome-stable"
 user_data_dir = "/home/axle/code/python/form2chatbot/tmp"
 
-# URL = "https://forms.gle/DFXPpFtFo5WH4LnZ9"
-URL = "https://aishe.nic.in/moetaskforce/#/surveyForm?langId=23&questionUserType=YjkyNTQ0Mjg2ZTI5NWVlMzU4NjdmOWJkNjgyMzQ1ZjE6OjNmNjc2OTkxNDA4NjI2MWJjN2JmOTM0OTllNGJjNTNmNTE2YTk5NmU5NjlhOWRmYTkyMDJjMDZlOWQ2MjA1YmQ6Olh2ZTlETmpmWGdQT0ROWjMvbXJrK0E9PQ%3D%3D"
-# URL = "https://forms.gle/RqqqodXEZuyG9A4t7"
+
+URL = os.getenv("FORM_URL")
 
 
 def run(playwright: Playwright) -> str:
     chromium = playwright.chromium
-    browser = chromium.launch(headless=True)
+    browser = chromium.launch(headless=False)
     context = browser.new_context()
     page = context.new_page()
     page.goto(URL)
@@ -58,13 +58,13 @@ def markdown_to_json(md_data: str):
     )
 
     response = client.models.generate_content(
-        model="gemini-2.5-flash-lite",
+        model="gemini-2.5-flash",
         config=types.GenerateContentConfig(system_instruction=system_prompt),
         contents=user_prompt,
     )
 
     res_md = response.text
-    print(res_md)
+    # print(res_md)
 
     pattern = re.compile(r"```(?:json)?(.*?)```", re.DOTALL)
 
@@ -83,10 +83,10 @@ def markdown_to_json(md_data: str):
 
         output_json_string = json.dumps(questions_list, indent=4)
 
-        with open("test.json", "w", encoding="utf-8") as f:
+        with open("db.json", "w", encoding="utf-8") as f:
             f.write(output_json_string)
 
-        print("Successfully parsed, added IDs, and saved test.json.")
+        print("Successfully parsed, added IDs, and saved db.json.")
 
     except json.JSONDecodeError as e:
         print("Error: The LLM output was not valid JSON.")
